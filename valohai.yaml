@@ -1,0 +1,46 @@
+- step:
+    name: redshift-query
+    image: python:3.11-slim
+    command:
+      - pip install -r connectors/steps/redshift/requirements.txt -q
+      - python -m connectors.steps.redshift.query
+    icon: redshift
+    category: connectors
+    parameters:
+      - name: sql_query
+        type: string
+        default: SELECT GETDATE() as current_datetime;
+        description: SQL query to be executed
+        widget: SQL
+      - name: datum_alias
+        type: string
+        description: Valohai datum alias given for the output
+        optional: true
+        widget: datumalias
+      - name: output_path
+        type: string
+        description: The name and path for the output file
+        default: results.csv
+    environment-variables:
+      - name: RSHOST
+        description: Redshift cluster endpoint url, e.g. "<cluster-identifier>.xxxxxxxxx.xx-xxxx-x.redshift.amazonaws.com"
+      - name: RSDATABASE
+        description: Database name to query from
+      - name: RSUSER
+        description: Database user name
+      - name: RSREGION
+        description: AWS region of the Redshift cluster e.g. "eu-west-1"
+        default: "eu-west-1"
+      - name: RSPORT
+        description: The network port of the Redshift cluster endpoint
+        default: "5439"
+      - name: RSPASSWORD
+        description: Database user password. Only used if RSUSEIAM is false.
+        optional: true
+      - name: RSIAM
+        description: Use Valohai worker IAM role or raw credentials. 0 = Pass the raw password with RSPASSWORD, 1 = Use the IAM to fetch temporary credentials
+        optional: true
+        default: "1"
+      - name: RSCLUSTERIDENTIFIER
+        description: The name of the cluster. Usually used by AWS as the first segment of Redshift cluster endpoint url.
+        optional: true
