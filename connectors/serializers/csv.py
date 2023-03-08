@@ -10,4 +10,4 @@ class CSVSerializer(BaseSerializer):
             writer = csv.writer(f)
             writer.writerow(columns)
             for row in rows:
-                writer.writerow(row)
+                writer.writerow([str(val) for val in row])

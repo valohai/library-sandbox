@@ -2,9 +2,9 @@
     name: redshift-query
     image: python:3.11-slim
     command:
-    - pip install -r /valohai/repository/connectors/steps/redshift/requirements.txt -q
-    - PYTHONPATH=/valohai/repository python /valohai/repository/connectors/steps/redshift/query.py {parameters}
-    icon: https://upload.wikimedia.org/wikipedia/commons/7/73/Amazon-Redshift-Logo.svg
+    - pip install -r connectors/steps/redshift/requirements.txt -q
+    - python -m connectors.steps.redshift.query
+    icon: redshift
     category: connectors
     parameters:
     - name: SQLquery

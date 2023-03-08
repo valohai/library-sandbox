@@ -73,7 +73,7 @@ try:
     
     if len(rows) > 0:
         print_truncated_table(rows, columns, max_rows=6, max_columns=6)
-        print(f"\nTotal rows: {str(len(rows))}")
+        print(f"\nTotal rows: {len(rows)}")
     else:
         print("Warning: No results for the query.")
 
