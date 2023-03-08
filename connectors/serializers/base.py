@@ -7,5 +7,5 @@ class BaseSerializer:
         self.output_path = output_path
     
     @abstractmethod
-    def serialize(self, data: Tuple[List[str]], columns: List[str]):
+    def serialize(self, data: Iterable[Iterable[Any]], columns: List[str]):
         pass
