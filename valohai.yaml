@@ -81,3 +81,35 @@
         default: PUBLIC
       - name: SNOWSQL_DATABASE
         description: Snowflake database name
+- step:
+    name: bigquery-query
+    image: python:3.11-slim
+    command:
+      - pip install -q -r connectors/steps/bigquery/requirements.txt
+      - python -m connectors.steps.bigquery.query
+    icon: snowflake
+    category: connectors
+    parameters:
+      - name: sql_query
+        type: string
+        default: SELECT CURRENT_DATETIME() AS current_datetime;
+        description: SQL query to be executed
+        widget: SQL
+      - name: datum_alias
+        type: string
+        description: Valohai datum alias given for the output
+        optional: true
+        widget: datumalias
+      - name: output_path
+        type: string
+        description: The name and path for the output file
+        default: results.csv
+    environment-variables:
+      - name: GCP_PROJECT
+        description: GCP project id
+      - name: GCP_IAM
+        description: 1 = Use Valohai worker IAM service role to connect, 0 = Use GCP_KEYFILE_CONTENTS_JSON
+        default: "1"
+      - name: GCP_KEYFILE_CONTENTS_JSON
+        description: The full contents of the GCP service account key file in JSON
+        optional: true
