@@ -2,9 +2,11 @@ target-version = "py311"
 select = [
     "B",
     "C",
+    "COM",
     "E",
     "F",
     "I",
+    "INP",
     "RET",
     "S",
     "T",

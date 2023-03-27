@@ -1,8 +1,13 @@
+from collections.abc import Sequence
+
 from tabulate import tabulate
 
 
 def print_truncated_table(
-    rows: tuple[list[str]], columns: list[str], max_rows=6, max_columns=6
+    rows: Sequence[Sequence[str]],
+    columns: Sequence[str],
+    max_rows=6,
+    max_columns=6,
 ):
     if len(rows) > max_rows:
         final_rows = [
@@ -11,7 +16,7 @@ def print_truncated_table(
             *rows[max_rows // -2 :],
         ]
     else:
-        final_rows = rows
+        final_rows = list(rows)
 
     if len(columns) > max_columns:
         final_columns = [
@@ -23,7 +28,7 @@ def print_truncated_table(
             [*r[: max_columns // 2], "...", *r[max_columns // -2 :]] for r in final_rows
         ]
     else:
-        final_columns = columns
+        final_columns = list(columns)
 
     table = tabulate(final_rows, headers=final_columns)
     unicode_space_table = table.replace(" ", "\u00A0")
