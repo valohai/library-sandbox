@@ -27,13 +27,13 @@ def main():
     ) as conn:
         print(sql_query + "\n")
 
-        rows = ()
+        rows = []
         columns = []
 
         query_job = conn.query(sql_query)
         result = query_job.result()
         columns = [field.name for field in result.schema]
-        rows = tuple([str(cell) for cell in row] for row in result)
+        rows = [list(row) for row in result]
 
         serializer = get_serializer(output_path)
         serializer.serialize(rows, columns)
