@@ -5,6 +5,7 @@ select = [
     "E",
     "F",
     "I",
+    "INP",
     "RET",
     "S",
     "T",
