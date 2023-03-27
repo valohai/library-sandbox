@@ -2,7 +2,10 @@ from tabulate import tabulate
 
 
 def print_truncated_table(
-    rows: tuple[list[str]], columns: list[str], max_rows=6, max_columns=6
+    rows: tuple[list[str]],
+    columns: list[str],
+    max_rows=6,
+    max_columns=6,
 ):
     if len(rows) > max_rows:
         final_rows = [
