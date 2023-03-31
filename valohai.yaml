@@ -113,3 +113,315 @@
       - name: GCP_KEYFILE_CONTENTS_JSON
         description: The full contents of the GCP service account key file in JSON
         optional: true
+- step:
+    name: huggingface-classification-train
+    image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
+    environment: staging-aws-eu-west-1-p2-xlarge
+    command:
+      - pip install -r models/nlp/classification/huggingface/requirements.txt
+      - python -m models.nlp.classification.huggingface.train
+    icon: https://huggingface.co/front/assets/huggingface_logo-noborder.svg
+    category: Huggingface / Classification
+    parameters:
+      - name: huggingface_repository
+        type: string
+        default: distilbert-base-uncased
+      - name: num_labels
+        type: integer
+        default: 0
+        description: Number of different labels (classes) in the dataset. 0 = Infer from the dataset
+      - name: learning_rate
+        type: float
+        default: 0.00002
+        description: Learning rate for the optimizer.
+      - name: adam_beta1
+        type: float
+        default: 0.9
+        description: Exponential decay rate for the first moment estimates in Adam optimizer.
+      - name: adam_beta2
+        type: float
+        default: 0.999
+        description: Exponential decay rate for the second moment estimates in Adam optimizer.
+      - name: adam_epsilon
+        type: float
+        default: 1e-08
+        description: Epsilon parameter for numerical stability in Adam optimizer.
+      - name: max_grad_norm
+        type: float
+        default: 1.0
+        description: Maximum gradient norm for gradient clipping.
+      - name: seed
+        type: integer
+        default: 42
+        description: Random seed for reproducibility.
+      - name: weight_decay
+        type: float
+        default: 0.01
+        description: Weight decay (L2 penalty) for regularization.
+      - name: warmup_steps
+        type: integer
+        default: 0
+        description: The number of steps for linearly increasing the learning rate from 0 to the set value.
+      - name: batch_size
+        type: integer
+        default: 8
+        description: Batch size for training and evaluation.
+      - name: eval_steps
+        type: integer
+        default: 50
+        description: Number of batches between evaluation on the validation set.
+      - name: max_steps
+        type: integer
+        default: -1
+        description: Maximum number of training steps (-1 means no limit).
+      - name: num_train_epochs
+        type: integer
+        default: 3
+        description: Number of epochs to train the model for.
+      - name: test_split_size
+        type: float
+        default: 0.05
+        description: Fraction of the training set to use as a holdout for testing.
+      - name: disable_tqdm
+        type: flag
+        default: false
+        description: Whether to disable the progress bar during training and evaluation.
+
+    inputs:
+      - name: dataset
+        default: https://valohai-ecosystem-datasets.s3.eu-west-1.amazonaws.com/yelp_reviews_medium.csv
+- step:
+    name: huggingface-classification-inference
+    image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
+    environment: staging-aws-eu-west-1-c5-xlarge
+    command:
+      - pip install -r models/nlp/classification/huggingface/requirements.txt
+      - python -m models.nlp.classification.huggingface.inference
+    icon: https://huggingface.co/front/assets/huggingface_logo-noborder.svg
+    category: Huggingface / Classification
+    parameters:
+      - name: output_path
+        type: string
+        description: The name and path for the output file
+        default: results.csv
+      - name: log_frequency
+        type: integer
+        description: Log the progress every n items
+        default: 100
+    inputs:
+      - name: model
+      - name: data
+        default: https://valohai-ecosystem-datasets.s3.eu-west-1.amazonaws.com/yelp_reviews_batch_inference.txt
+- step:
+    name: huggingface-qa-train
+    image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
+    environment: staging-aws-eu-west-1-p2-xlarge
+    command:
+      - pip install -r models/nlp/qa/huggingface/requirements.txt
+      - python -m models.nlp.qa.huggingface.train
+    icon: https://huggingface.co/front/assets/huggingface_logo-noborder.svg
+    category: Huggingface / Question Answering
+    parameters:
+      - name: huggingface_repository
+        type: string
+        default: distilbert-base-uncased
+        description: The name of the Hugging Face repository for the pre-trained model to be used.
+      - name: max_length
+        type: integer
+        default: 384
+        description: The maximum length of a feature (question and context) to be considered during training.
+      - name: doc_stride
+        type: integer
+        default: 128
+        description: The authorized overlap between two part of the context when splitting it is needed.
+      - name: learning_rate
+        type: float
+        default: 0.00002
+        description: The learning rate to be used during training.
+      - name: adam_beta1
+        type: float
+        default: 0.9
+        description: Exponential decay rate for the first moment estimates in Adam optimizer.
+      - name: adam_beta2
+        type: float
+        default: 0.999
+        description: Exponential decay rate for the second moment estimates in Adam optimizer.
+      - name: adam_epsilon
+        type: float
+        default: 1e-08
+        description: A small value to add to the denominator in Adam optimizer for numerical stability.
+      - name: max_grad_norm
+        type: float
+        default: 1.0
+        description: The maximum norm of the gradient.
+      - name: seed
+        type: integer
+        default: 42
+        description: The random seed to be used during training for reproducibility.
+      - name: weight_decay
+        type: float
+        default: 0.01
+        description: The L2 regularization coefficient.
+      - name: warmup_steps
+        type: integer
+        default: 0
+        description: The number of steps for linearly increasing the learning rate from 0 to the set value.
+      - name: batch_size
+        type: integer
+        default: 8
+        description: The batch size.
+      - name: eval_steps
+        type: integer
+        default: 500
+        description: Number of batches between evaluation on the validation set.
+      - name: max_steps
+        type: integer
+        default: -1
+        description: The maximum number of steps for training. -1 = No limit
+      - name: num_train_epochs
+        type: integer
+        default: 3
+        description: The maximum number of epochs for training.
+      - name: test_split_size
+        type: float
+        default: 0.01
+        description: The percentage of the training data to use for testing.
+      - name: disable_tqdm
+        type: flag
+        default: true
+        description: Whether or not to disable the progress bar during training.
+    inputs:
+      - name: dataset
+        default: https://valohai-ecosystem-datasets.s3.eu-west-1.amazonaws.com/squadv1.csv
+- step:
+    name: huggingface-qa-inference
+    image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
+    environment: staging-aws-eu-west-1-p2-xlarge
+    command:
+      - pip install -r models/nlp/qa/huggingface/requirements.txt
+      - python -m models.nlp.qa.huggingface.inference
+    icon: https://huggingface.co/front/assets/huggingface_logo-noborder.svg
+    category: Huggingface / Question Answering
+    parameters:
+      - name: output_path
+        type: string
+        description: The name and path for the output file
+        default: results.csv
+      - name: log_frequency
+        type: integer
+        description: Log the progress every n items
+        default: 100
+    inputs:
+      - name: model
+      - name: data
+        default: https://valohai-ecosystem-datasets.s3.eu-west-1.amazonaws.com/squadv1_batch_inference.csv
+- step:
+    name: huggingface-summarization-train
+    image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
+    environment: staging-aws-eu-west-1-p2-xlarge
+    command:
+      - pip install -r models/nlp/summarization/huggingface/requirements.txt
+      - python -m models.nlp.summarization.huggingface.train
+    icon: https://huggingface.co/front/assets/huggingface_logo-noborder.svg
+    category: Huggingface / Summarization
+    parameters:
+      - name: huggingface_repository
+        type: string
+        default: sshleifer/distilbart-xsum-12-1
+      - name: max_text_length
+        type: integer
+        default: 128
+        description: The maximum length of the text (in tokens)
+      - name: max_summary_length
+        type: integer
+        default: 128
+        description: The maximum length of the text (in tokens)
+      - name: learning_rate
+        type: float
+        default: 0.0001
+        description: The learning rate used for the optimizer.
+      - name: adam_beta1
+        type: float
+        default: 0.9
+        description: Exponential decay rate for the first moment estimates in Adam optimizer.
+      - name: adam_beta2
+        type: float
+        default: 0.999
+        description: Exponential decay rate for the second moment estimates in Adam optimizer.
+      - name: adam_epsilon
+        type: float
+        default: 1e-08
+        description: A small value to add to the denominator in Adam optimizer for numerical stability.
+      - name: max_grad_norm
+        type: float
+        default: 1.0
+        description: The maximum norm of the gradient for gradient clipping.
+      - name: seed
+        type: integer
+        default: 42
+        description: The random seed used for reproducibility.
+      - name: weight_decay
+        type: float
+        default: 0.0
+        description: The L2 regularization coefficient.
+      - name: warmup_steps
+        type: integer
+        default: 0
+        description: The number of steps for linearly increasing the learning rate from 0 to the set value.
+      - name: batch_size
+        type: integer
+        default: 4
+        description: The number of samples per batch during training.
+      - name: eval_steps
+        type: integer
+        default: 500
+        description: Number of batches between evaluation on the validation set.
+      - name: max_steps
+        type: integer
+        default: -1
+        description: The maximum number of training steps. -1 = No limit
+      - name: num_train_epochs
+        type: integer
+        default: 3
+        description: The number of training epochs.
+      - name: test_split_size
+        type: float
+        default: 0.001
+        description: The proportion of samples used for testing.
+      - name: disable_tqdm
+        type: flag
+        default: false
+        description: Whether to disable tqdm progress bar during training.
+    inputs:
+      - name: dataset
+        default: https://valohai-ecosystem-datasets.s3.eu-west-1.amazonaws.com/aeslc.csv
+- step:
+    name: huggingface-summarization-inference
+    image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
+    environment: staging-aws-eu-west-1-p2-xlarge
+    command:
+      - pip install -r models/nlp/summarization/huggingface/requirements.txt
+      - python -m models.nlp.summarization.huggingface.inference
+    icon: https://huggingface.co/front/assets/huggingface_logo-noborder.svg
+    category: Huggingface / Summarization
+    inputs:
+      - name: model
+      - name: data
+        default: https://valohai-ecosystem-datasets.s3.eu-west-1.amazonaws.com/aeslc_batch_inference.txt
+    parameters:
+      - name: max_text_length
+        type: integer
+        default: 128
+        description: The maximum length of the text (in tokens)
+      - name: max_summary_length
+        type: integer
+        default: 128
+        description: The maximum length of the text (in tokens)
+      - name: log_frequency
+        type: integer
+        description: Log the progress every n items
+        default: 100
+      - name: output_path
+        type: string
+        description: The name and path for the output file
+        default: results.csv

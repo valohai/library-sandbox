@@ -1,4 +1,4 @@
-from connectors.serializers.csv import CSVSerializer
+from utils.serializers.csv import CSVSerializer
 
 
 def get_serializer(output_path):

@@ -3,9 +3,9 @@ import os
 
 import valohai
 
-from connectors.serializers import get_serializer
 from connectors.steps.bigquery.connect import connect
 from connectors.utils.table_printer import print_truncated_table
+from utils.serializers import get_serializer
 
 
 def main():
