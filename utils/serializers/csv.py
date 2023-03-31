@@ -2,7 +2,7 @@ import csv
 from collections.abc import Iterable
 from typing import Any
 
-from connectors.serializers.base import BaseSerializer
+from utils.serializers.base import BaseSerializer
 
 
 class CSVSerializer(BaseSerializer):

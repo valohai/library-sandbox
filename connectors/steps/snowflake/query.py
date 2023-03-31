@@ -4,8 +4,8 @@ import os
 import valohai
 from snowflake.connector import connect
 
-from connectors.serializers import get_serializer
 from connectors.utils.table_printer import print_truncated_table
+from utils.serializers import get_serializer
 
 
 def main():
