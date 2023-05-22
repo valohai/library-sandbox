@@ -1,6 +1,5 @@
 import tempfile
 
-import torch
 import valohai
 from datasets import load_dataset
 from transformers import (
@@ -11,6 +10,7 @@ from transformers import (
 )
 
 from models.nlp.utils.huggingface import PrintMetricsCallback
+from utils.torch import get_preferred_torch_device
 
 
 def main():
@@ -36,7 +36,7 @@ def main():
 
     tokenized_datasets = dataset.map(tokenize_function, batched=True)
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = get_preferred_torch_device()
     model = AutoModelForSequenceClassification.from_pretrained(
         model_name,
         num_labels=num_labels,

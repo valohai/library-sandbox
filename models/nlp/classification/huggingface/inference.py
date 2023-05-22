@@ -9,6 +9,7 @@ from transformers import (
 
 from models.nlp.utils.huggingface import load_huggingface_model_and_tokenizer
 from utils.serializers import get_serializer
+from utils.torch import get_preferred_torch_device
 
 
 @torch.no_grad()
@@ -27,11 +28,13 @@ def predict(
 
 
 def main():
-    tokenizer, model, device = load_huggingface_model_and_tokenizer(
+    device = get_preferred_torch_device()
+    tokenizer, model = load_huggingface_model_and_tokenizer(
         valohai.inputs("model").path(process_archives=False),
         AutoModelForSequenceClassification,
         AutoTokenizer,
     )
+    model.to(device)
     data_path = valohai.inputs("data").path("*.txt")
     log_frequency = valohai.parameters("log_frequency").value
 

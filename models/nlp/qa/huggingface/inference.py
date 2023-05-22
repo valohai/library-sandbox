@@ -11,6 +11,7 @@ from transformers import (
 
 from models.nlp.utils.huggingface import load_huggingface_model_and_tokenizer
 from utils.serializers import get_serializer
+from utils.torch import get_preferred_torch_device
 
 
 def load_data(data_path: str) -> list[dict[str, str]]:
@@ -48,11 +49,13 @@ def predict(
 
 
 def main():
-    tokenizer, model, device = load_huggingface_model_and_tokenizer(
+    device = get_preferred_torch_device()
+    tokenizer, model = load_huggingface_model_and_tokenizer(
         valohai.inputs("model").path(process_archives=False),
         AutoModelForQuestionAnswering,
         AutoTokenizer,
     )
+    model.to(device)
     data_path = valohai.inputs("data").path("*.csv")
     rows = load_data(data_path)
     log_frequency = valohai.parameters("log_frequency").value
