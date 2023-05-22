@@ -16,16 +16,44 @@ if TYPE_CHECKING:
     from transformers.models.auto.auto_factory import _BaseAutoModelClass
 
 
+def load_huggingface_model_and_tokenizer_from_config(
+    *,
+    model_type: type[_BaseAutoModelClass],
+    tokenizer_type: type[PreTrainedTokenizer | AutoTokenizer] = AutoTokenizer,
+):
+    """
+    Load a HuggingFace model and tokenizer from the `model` input or the `huggingface_repository` parameter.
+    """
+    model_spec = (
+        valohai.inputs("model").path(process_archives=False)
+        or valohai.parameters("huggingface_repository").value
+    )
+    if not model_spec:
+        raise ValueError(
+            "Either the input `model` or the `huggingface_repository` parameter must be set",
+        )
+    tokenizer, model = load_huggingface_model_and_tokenizer(
+        str(model_spec),
+        model_type=model_type,
+        tokenizer_type=tokenizer_type,
+    )
+    return model, tokenizer
+
+
 def load_huggingface_model_and_tokenizer(
     model_spec: str,
     model_type: type[_BaseAutoModelClass],
-    tokenizer_type: type[PreTrainedTokenizer] = AutoTokenizer,
+    tokenizer_type: type[PreTrainedTokenizer | AutoTokenizer] = AutoTokenizer,
 ) -> tuple[PreTrainedTokenizer, PreTrainedModel]:
     """
     Load a HuggingFace model and tokenizer from a model spec (pathname to a .zip or a model identifier on Hub).
     """
     if model_spec.endswith(".zip"):
-        return _load_from_zip(model_spec, model_type=model_type, tokenizer_type=tokenizer_type)
+        return _load_from_zip(
+            model_spec,
+            model_type=model_type,
+            tokenizer_type=tokenizer_type,
+        )
     tokenizer = tokenizer_type.from_pretrained(model_spec)
     model = model_type.from_pretrained(model_spec)
     return tokenizer, model
@@ -35,7 +63,7 @@ def _load_from_zip(
     model_spec: str,
     *,
     model_type: type[_BaseAutoModelClass],
-    tokenizer_type: type[PreTrainedTokenizer],
+    tokenizer_type: type[PreTrainedTokenizer | AutoTokenizer],
 ):
     with tempfile.TemporaryDirectory() as temp_dir:
         with zipfile.ZipFile(model_spec, "r") as zip_ref:

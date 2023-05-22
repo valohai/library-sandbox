@@ -208,6 +208,9 @@
         type: integer
         description: Log the progress every n items
         default: 100
+      - name: huggingface_repository
+        type: string
+        description: (Optional) The name of a Hugging Face repository to use a pre-trained model.
     inputs:
       - name: model
       - name: data
@@ -311,6 +314,9 @@
         type: integer
         description: Log the progress every n items
         default: 100
+      - name: huggingface_repository
+        type: string
+        description: (Optional) The name of a Hugging Face repository to use a pre-trained model.
     inputs:
       - name: model
       - name: data
@@ -425,3 +431,6 @@
         type: string
         description: The name and path for the output file
         default: results.csv
+      - name: huggingface_repository
+        type: string
+        description: (Optional) The name of a Hugging Face repository to use a pre-trained model.
