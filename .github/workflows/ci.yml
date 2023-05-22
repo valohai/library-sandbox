@@ -30,7 +30,7 @@ jobs:
       - name: Create mypy cache directory
         run: mkdir -p /tmp/.cache/mypy
       - name: Run mypy
-        run: mypy --non-interactive --install-types --cache-dir=/tmp/.cache/mypy --explicit-package-bases .
+        run: mypy --non-interactive --install-types --cache-dir=/tmp/.cache/mypy .
   test:
     runs-on: ubuntu-latest
     steps:
