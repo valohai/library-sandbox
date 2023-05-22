@@ -28,6 +28,7 @@ def load_data(data_path: str) -> list[dict[str, str]]:
     return data
 
 
+@torch.no_grad()
 def predict(
     question: dict[str, str],
     tokenizer: PreTrainedTokenizer,
@@ -36,8 +37,7 @@ def predict(
 ) -> str:
     inputs = tokenizer(question["question"], question["context"], return_tensors="pt")
     inputs = {key: tensor.to(device) for key, tensor in inputs.items()}
-    with torch.no_grad():
-        outputs = model(**inputs)
+    outputs = model(**inputs)
     answer_start_index = outputs.start_logits.argmax()
     answer_end_index = outputs.end_logits.argmax()
     predict_answer_tokens = inputs["input_ids"][

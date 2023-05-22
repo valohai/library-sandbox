@@ -11,6 +11,7 @@ from models.nlp.utils.huggingface import load_huggingface_model_and_tokenizer
 from utils.serializers import get_serializer
 
 
+@torch.no_grad()
 def predict(
     text: str,
     tokenizer: PreTrainedTokenizer,
@@ -21,8 +22,7 @@ def predict(
     inputs = {key: tensor.to(device) for key, tensor in inputs.items()}
     outputs = model(**inputs)
     logits = outputs.logits
-    with torch.no_grad():
-        predictions = torch.argmax(logits, dim=-1)
+    predictions = torch.argmax(logits, dim=-1)
     return int(predictions.item())
 
 

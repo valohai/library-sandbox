@@ -11,6 +11,7 @@ from models.nlp.utils.huggingface import load_huggingface_model_and_tokenizer
 from utils.serializers import get_serializer
 
 
+@torch.no_grad()
 def predict(
     text: str | list[str],
     tokenizer: PreTrainedTokenizerBase,
