@@ -14,3 +14,11 @@ Linting/formatting happens via `pre-commit`. Install it with `pip install pre-co
 
 The linters run by `pre-commit` are `ruff`, `black`, and `prettier`;
 you can (should) set up your IDE to run them automatically too.
+
+### Tests
+
+You can run tests with `py.test`:
+
+```
+py.test -v .
+```

@@ -20,3 +20,6 @@ ignore = [
     "T2",
     "TRY003",
 ]
+
+[per-file-ignores]
+"**/test*.py" = ["S101"]  # tests can use assertions
