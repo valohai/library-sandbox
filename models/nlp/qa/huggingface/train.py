@@ -2,7 +2,6 @@ import json
 import tempfile
 from typing import Any
 
-import torch
 import valohai
 from datasets import load_dataset
 from transformers import (
@@ -14,6 +13,7 @@ from transformers import (
 )
 
 from models.nlp.utils.huggingface import PrintMetricsCallback
+from utils.torch import get_preferred_torch_device
 
 
 def prepare_train_features(
@@ -178,7 +178,7 @@ def main():
         },
     )
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = get_preferred_torch_device()
     model = AutoModelForQuestionAnswering.from_pretrained(model_name).to(device)
 
     with tempfile.TemporaryDirectory() as temp_dir:

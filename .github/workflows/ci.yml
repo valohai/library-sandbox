@@ -30,4 +30,16 @@ jobs:
       - name: Create mypy cache directory
         run: mkdir -p /tmp/.cache/mypy
       - name: Run mypy
-        run: mypy --non-interactive --install-types --cache-dir=/tmp/.cache/mypy --explicit-package-bases .
+        run: mypy --non-interactive --install-types --cache-dir=/tmp/.cache/mypy .
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+          cache: pip
+          cache-dependency-path: "**/requirements.txt"
+      - run: find . -name requirements.txt | xargs -n1 pip install -r
+      - run: pip install pytest-cov
+      - run: py.test -svv --cov . --cov-report term-missing

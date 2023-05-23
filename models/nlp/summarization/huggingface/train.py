@@ -13,6 +13,7 @@ from transformers import (
 )
 
 from models.nlp.utils.huggingface import PrintMetricsCallback
+from utils.torch import get_preferred_torch_device
 
 
 def preprocess_function(
@@ -42,7 +43,7 @@ def main():
         seed=valohai.parameters("seed").value,
     )
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = get_preferred_torch_device()
     tokenized_datasets = dataset.map(
         preprocess_function,
         batched=True,

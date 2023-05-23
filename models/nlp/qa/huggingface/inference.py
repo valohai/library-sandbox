@@ -9,8 +9,11 @@ from transformers import (
     PreTrainedTokenizer,
 )
 
-from models.nlp.utils.huggingface import load_huggingface_model_and_tokenizer
+from models.nlp.utils.huggingface import (
+    load_huggingface_model_and_tokenizer_from_config,
+)
 from utils.serializers import get_serializer
+from utils.torch import get_preferred_torch_device
 
 
 def load_data(data_path: str) -> list[dict[str, str]]:
@@ -28,6 +31,7 @@ def load_data(data_path: str) -> list[dict[str, str]]:
     return data
 
 
+@torch.no_grad()
 def predict(
     question: dict[str, str],
     tokenizer: PreTrainedTokenizer,
@@ -36,8 +40,7 @@ def predict(
 ) -> str:
     inputs = tokenizer(question["question"], question["context"], return_tensors="pt")
     inputs = {key: tensor.to(device) for key, tensor in inputs.items()}
-    with torch.no_grad():
-        outputs = model(**inputs)
+    outputs = model(**inputs)
     answer_start_index = outputs.start_logits.argmax()
     answer_end_index = outputs.end_logits.argmax()
     predict_answer_tokens = inputs["input_ids"][
@@ -48,11 +51,12 @@ def predict(
 
 
 def main():
-    tokenizer, model, device = load_huggingface_model_and_tokenizer(
-        valohai.inputs("model").path(process_archives=False),
-        AutoModelForQuestionAnswering,
-        AutoTokenizer,
+    device = get_preferred_torch_device()
+    tokenizer, model = load_huggingface_model_and_tokenizer_from_config(
+        model_type=AutoModelForQuestionAnswering,
+        tokenizer_type=AutoTokenizer,
     )
+    model.to(device)
     data_path = valohai.inputs("data").path("*.csv")
     rows = load_data(data_path)
     log_frequency = valohai.parameters("log_frequency").value
