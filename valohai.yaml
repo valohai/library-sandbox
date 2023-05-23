@@ -116,7 +116,7 @@
 - step:
     name: huggingface-classification-train
     image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
-    environment: staging-aws-eu-west-1-p2-xlarge
+    environment: aws-eu-west-1-p2-xlarge
     command:
       - pip install -r models/nlp/classification/huggingface/requirements.txt
       - python -m models.nlp.classification.huggingface.train
@@ -193,7 +193,7 @@
 - step:
     name: huggingface-classification-inference
     image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
-    environment: staging-aws-eu-west-1-c5-xlarge
+    environment: aws-eu-west-1-p2-xlarge
     command:
       - pip install -r models/nlp/classification/huggingface/requirements.txt
       - python -m models.nlp.classification.huggingface.inference
@@ -218,7 +218,7 @@
 - step:
     name: huggingface-qa-train
     image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
-    environment: staging-aws-eu-west-1-p2-xlarge
+    environment: aws-eu-west-1-p2-xlarge
     command:
       - pip install -r models/nlp/qa/huggingface/requirements.txt
       - python -m models.nlp.qa.huggingface.train
@@ -299,7 +299,7 @@
 - step:
     name: huggingface-qa-inference
     image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
-    environment: staging-aws-eu-west-1-p2-xlarge
+    environment: aws-eu-west-1-p2-xlarge
     command:
       - pip install -r models/nlp/qa/huggingface/requirements.txt
       - python -m models.nlp.qa.huggingface.inference
@@ -324,7 +324,7 @@
 - step:
     name: huggingface-summarization-train
     image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
-    environment: staging-aws-eu-west-1-p2-xlarge
+    environment: aws-eu-west-1-p2-xlarge
     command:
       - pip install -r models/nlp/summarization/huggingface/requirements.txt
       - python -m models.nlp.summarization.huggingface.train
@@ -404,7 +404,7 @@
 - step:
     name: huggingface-summarization-inference
     image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
-    environment: staging-aws-eu-west-1-p2-xlarge
+    environment: aws-eu-west-1-p2-xlarge
     command:
       - pip install -r models/nlp/summarization/huggingface/requirements.txt
       - python -m models.nlp.summarization.huggingface.inference
