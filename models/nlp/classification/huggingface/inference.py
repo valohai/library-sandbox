@@ -50,7 +50,7 @@ def main():
 
     output_path = valohai.outputs().path(valohai.parameters("output_path").value)
     serializer = get_serializer(output_path)
-    serializer.serialize(results, ["label", "text"])
+    serializer.serialize(results, ["text", "label"])
 
 
 if __name__ == "__main__":
