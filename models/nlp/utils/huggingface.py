@@ -16,11 +16,11 @@ if TYPE_CHECKING:
     from transformers.models.auto.auto_factory import _BaseAutoModelClass
 
 
-def load_huggingface_model_and_tokenizer_from_config(
+def load_huggingface_tokenizer_and_model_from_config(
     *,
     model_type: type[_BaseAutoModelClass],
     tokenizer_type: type[PreTrainedTokenizer | AutoTokenizer] = AutoTokenizer,
-):
+) -> tuple[PreTrainedTokenizer, PreTrainedModel]:
     """
     Load a HuggingFace model and tokenizer from the `model` input or the `huggingface_repository` parameter.
     """
@@ -37,7 +37,7 @@ def load_huggingface_model_and_tokenizer_from_config(
         model_type=model_type,
         tokenizer_type=tokenizer_type,
     )
-    return model, tokenizer
+    return tokenizer, model
 
 
 def load_huggingface_model_and_tokenizer(

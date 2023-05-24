@@ -10,7 +10,7 @@ from transformers import (
 )
 
 from models.nlp.utils.huggingface import (
-    load_huggingface_model_and_tokenizer_from_config,
+    load_huggingface_tokenizer_and_model_from_config,
 )
 from utils.serializers import get_serializer
 from utils.torch import get_preferred_torch_device
@@ -52,7 +52,7 @@ def predict(
 
 def main():
     device = get_preferred_torch_device()
-    tokenizer, model = load_huggingface_model_and_tokenizer_from_config(
+    tokenizer, model = load_huggingface_tokenizer_and_model_from_config(
         model_type=AutoModelForQuestionAnswering,
         tokenizer_type=AutoTokenizer,
     )

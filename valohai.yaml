@@ -186,7 +186,6 @@
         type: flag
         default: false
         description: Whether to disable the progress bar during training and evaluation.
-
     inputs:
       - name: dataset
         default: https://valohai-ecosystem-datasets.s3.eu-west-1.amazonaws.com/yelp_reviews_medium.csv
@@ -210,6 +209,7 @@
         default: 100
       - name: huggingface_repository
         type: string
+        optional: true
         description: (Optional) The name of a Hugging Face repository to use a pre-trained model.
     inputs:
       - name: model
@@ -316,6 +316,7 @@
         default: 100
       - name: huggingface_repository
         type: string
+        optional: true
         description: (Optional) The name of a Hugging Face repository to use a pre-trained model.
     inputs:
       - name: model
@@ -433,4 +434,5 @@
         default: results.csv
       - name: huggingface_repository
         type: string
+        optional: true
         description: (Optional) The name of a Hugging Face repository to use a pre-trained model.
