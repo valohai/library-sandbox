@@ -87,7 +87,7 @@
     command:
       - pip install -q -r connectors/steps/bigquery/requirements.txt
       - python -m connectors.steps.bigquery.query
-    icon: snowflake
+    icon: bigquery
     category: connectors
     parameters:
       - name: sql_query
