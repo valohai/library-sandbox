@@ -20,7 +20,7 @@ def load_huggingface_tokenizer_and_model_from_config(
     *,
     model_type: type[_BaseAutoModelClass],
     tokenizer_type: type[PreTrainedTokenizer | AutoTokenizer] = AutoTokenizer,
-):
+) -> tuple[PreTrainedTokenizer, PreTrainedModel]:
     """
     Load a HuggingFace model and tokenizer from the `model` input or the `huggingface_repository` parameter.
     """
