@@ -115,7 +115,7 @@
         optional: true
 - step:
     name: huggingface-classification-train
-    image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
+    image: pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
     environment: aws-eu-west-1-p2-xlarge
     command:
       - pip install -r models/nlp/classification/huggingface/requirements.txt
@@ -191,7 +191,7 @@
         default: https://valohai-ecosystem-datasets.s3.eu-west-1.amazonaws.com/yelp_reviews_medium.csv
 - step:
     name: huggingface-classification-inference
-    image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
+    image: pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
     environment: aws-eu-west-1-p2-xlarge
     command:
       - pip install -r models/nlp/classification/huggingface/requirements.txt
@@ -217,7 +217,7 @@
         default: https://valohai-ecosystem-datasets.s3.eu-west-1.amazonaws.com/yelp_reviews_batch_inference.txt
 - step:
     name: huggingface-qa-train
-    image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
+    image: pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
     environment: aws-eu-west-1-p2-xlarge
     command:
       - pip install -r models/nlp/qa/huggingface/requirements.txt
@@ -298,7 +298,7 @@
         default: https://valohai-ecosystem-datasets.s3.eu-west-1.amazonaws.com/squadv1.csv
 - step:
     name: huggingface-qa-inference
-    image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
+    image: pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
     environment: aws-eu-west-1-p2-xlarge
     command:
       - pip install -r models/nlp/qa/huggingface/requirements.txt
@@ -324,7 +324,7 @@
         default: https://valohai-ecosystem-datasets.s3.eu-west-1.amazonaws.com/squadv1_batch_inference.csv
 - step:
     name: huggingface-summarization-train
-    image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
+    image: pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
     environment: aws-eu-west-1-p2-xlarge
     command:
       - pip install -r models/nlp/summarization/huggingface/requirements.txt
@@ -404,7 +404,7 @@
         default: https://valohai-ecosystem-datasets.s3.eu-west-1.amazonaws.com/aeslc.csv
 - step:
     name: huggingface-summarization-inference
-    image: pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
+    image: pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
     environment: aws-eu-west-1-p2-xlarge
     command:
       - pip install -r models/nlp/summarization/huggingface/requirements.txt
