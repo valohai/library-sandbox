@@ -9,7 +9,7 @@
     parameters:
       - name: sql_query
         type: string
-        default: SELECT GETDATE() as current_datetime;
+        default: SELECT GETDATE() as current_datetime, 1 as one, 2 as two;
         description: SQL query to be executed
         widget: SQL
       - name: datum_alias
@@ -55,7 +55,7 @@
     parameters:
       - name: sql_query
         type: string
-        default: SELECT GETDATE() as current_datetime;
+        default: SELECT GETDATE() as current_datetime, 1 as one, 2 as two;
         description: SQL query to be executed
         widget: SQL
       - name: datum_alias
@@ -92,7 +92,7 @@
     parameters:
       - name: sql_query
         type: string
-        default: SELECT CURRENT_DATETIME() AS current_datetime;
+        default: SELECT CURRENT_DATETIME() AS current_datetime, 1 as one, 2 as two;
         description: SQL query to be executed
         widget: SQL
       - name: datum_alias
