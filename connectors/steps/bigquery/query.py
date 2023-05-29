@@ -5,12 +5,13 @@ import valohai
 
 from connectors.steps.bigquery.connect import connect
 from connectors.utils.table_printer import print_truncated_table
+from utils.params import parse_boolean
 from utils.serializers import get_serializer
 
 
 def main():
     # bigquery environment variables
-    use_iam = bool(int(os.environ.get("GCP_IAM", True)))
+    use_iam = parse_boolean(os.environ.get("GCP_IAM", "1"))
     project = os.environ.get("GCP_PROJECT")
     keyfile_contents = os.environ.get("GCP_KEYFILE_CONTENTS_JSON")
 

@@ -5,6 +5,7 @@ import valohai
 
 from connectors.steps.redshift.connect import connect
 from connectors.utils.table_printer import print_truncated_table
+from utils.params import parse_boolean
 from utils.serializers import get_serializer
 
 
@@ -17,7 +18,7 @@ def main():
     cluster_identifier = os.environ.get("RSCLUSTERIDENTIFIER")
     region = os.environ.get("RSREGION")
     port = int(os.environ.get("RSPORT", 5439))
-    use_iam = bool(os.environ.get("RSIAM", False))
+    use_iam = parse_boolean(os.environ.get("RSIAM", "1"))
 
     # Step parameters
     datum_alias = valohai.parameters("datum_alias").value
