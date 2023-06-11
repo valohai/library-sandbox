@@ -26,7 +26,7 @@ def main():
     sql_query = valohai.parameters("sql_query").value
 
     with connect(
-        user=username,
+        username=username,
         password=password,
         private_key=private_key,
         passphrase=passphrase,
