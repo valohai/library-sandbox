@@ -74,6 +74,10 @@
         description: Snowflake user name
       - name: SNOWSQL_PWD
         description: Snowflake password
+      - name: SNOWSQL_PRIVATEKEY
+        description: Snowflake keyfile (instead of password)
+      - name: SNOWSQL_PASSPHRASE
+        description: Snowflake passphrase for private key
       - name: SNOWSQL_WAREHOUSE
         description: Snowflake warehouse name
       - name: SNOWSQL_SCHEMA

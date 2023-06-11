@@ -2,8 +2,8 @@ import json
 import os
 
 import valohai
-from snowflake.connector import connect
 
+from connectors.steps.snowflake.connect import connect
 from connectors.utils.table_printer import print_truncated_table
 from utils.serializers import get_serializer
 
@@ -12,6 +12,8 @@ def main():
     # Snowflake environment variables
     username = os.environ.get("SNOWSQL_USER")
     password = os.environ.get("SNOWSQL_PWD")
+    private_key = os.environ.get("SNOWSQL_PRIVATEKEY")
+    passphrase = os.environ.get("SNOWSQL_PASSPHRASE")
     account = os.environ.get("SNOWSQL_ACCOUNT")
     warehouse = os.environ.get("SNOWSQL_WAREHOUSE")
     database = os.environ.get("SNOWSQL_DATABASE")
@@ -24,8 +26,10 @@ def main():
     sql_query = valohai.parameters("sql_query").value
 
     with connect(
-        user=username,
+        username=username,
         password=password,
+        private_key=private_key,
+        passphrase=passphrase,
         account=account,
         warehouse=warehouse,
         database=database,
