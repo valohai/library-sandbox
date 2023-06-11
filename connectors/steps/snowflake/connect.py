@@ -15,7 +15,7 @@ def connect(
 ):
     if private_key:
         p_key = serialization.load_pem_private_key(
-            private_key,
+            private_key.encode("ascii"),
             password=passphrase.encode(),
             backend=default_backend(),
         )
