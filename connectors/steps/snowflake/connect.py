@@ -13,8 +13,9 @@ def connect(
     schema: str,
 ):
     if private_key:
+        key = f"-----BEGIN ENCRYPTED PRIVATE KEY-----\n{private_key}\n-----END ENCRYPTED PRIVATE KEY-----"
         p_key = serialization.load_pem_private_key(
-            private_key.encode(),
+            key.encode(),
             password=passphrase.encode(),
             backend=default_backend(),
         )
