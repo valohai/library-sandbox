@@ -13,17 +13,7 @@ def connect(
     schema: str,
 ):
     if private_key:
-        key = f"-----BEGIN ENCRYPTED PRIVATE KEY-----\n{private_key}\n-----END ENCRYPTED PRIVATE KEY-----"
-        p_key = serialization.load_pem_private_key(
-            key.encode(),
-            password=passphrase.encode(),
-            backend=default_backend(),
-        )
-        pkb = p_key.private_bytes(
-            encoding=serialization.Encoding.DER,
-            format=serialization.PrivateFormat.PKCS8,
-            encryption_algorithm=serialization.NoEncryption(),
-        )
+        pkb = decrypt_key(private_key, passphrase)
         return snowflake.connector.connect(
             user=username,
             account=account,
@@ -41,3 +31,17 @@ def connect(
         database=database,
         schema=schema,
     )
+
+def decrypt_key(private_key: str, passphrase: str):
+    key = f"-----BEGIN ENCRYPTED PRIVATE KEY-----\n{private_key}\n-----END ENCRYPTED PRIVATE KEY-----"
+    p_key = serialization.load_pem_private_key(
+        key.encode(),
+        password=passphrase.encode(),
+        backend=default_backend(),
+    )
+    pkb = p_key.private_bytes(
+        encoding=serialization.Encoding.DER,
+        format=serialization.PrivateFormat.PKCS8,
+        encryption_algorithm=serialization.NoEncryption(),
+    )
+    return key
