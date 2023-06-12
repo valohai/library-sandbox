@@ -2,6 +2,7 @@ import snowflake.connector
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 
+
 def connect(
     username: str,
     password: str,
@@ -32,6 +33,7 @@ def connect(
         schema=schema,
     )
 
+
 def decrypt_key(private_key: str, passphrase: str):
     key = f"-----BEGIN ENCRYPTED PRIVATE KEY-----\n{private_key}\n-----END ENCRYPTED PRIVATE KEY-----"
     p_key = serialization.load_pem_private_key(
@@ -39,9 +41,8 @@ def decrypt_key(private_key: str, passphrase: str):
         password=passphrase.encode(),
         backend=default_backend(),
     )
-    pkb = p_key.private_bytes(
+    return p_key.private_bytes(
         encoding=serialization.Encoding.DER,
         format=serialization.PrivateFormat.PKCS8,
         encryption_algorithm=serialization.NoEncryption(),
     )
-    return key
