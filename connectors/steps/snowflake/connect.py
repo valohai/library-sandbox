@@ -6,6 +6,7 @@ from cryptography.hazmat.primitives import serialization
 def connect(
     username: str,
     password: str,
+    role: str,
     private_key: str,
     passphrase: str,
     account: str,
@@ -17,6 +18,7 @@ def connect(
         pkb = decrypt_key(private_key, passphrase)
         return snowflake.connector.connect(
             user=username,
+            role=role,
             account=account,
             private_key=pkb,
             warehouse=warehouse,
@@ -26,6 +28,7 @@ def connect(
 
     return snowflake.connector.connect(
         user=username,
+        role=role,
         password=password,
         account=account,
         warehouse=warehouse,

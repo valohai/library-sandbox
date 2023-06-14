@@ -14,6 +14,7 @@ def main():
     password = os.environ.get("SNOWSQL_PWD")
     private_key = os.environ.get("SNOWSQL_PRIVATEKEY")
     passphrase = os.environ.get("SNOWSQL_PASSPHRASE")
+    role = os.environ.get("SNOWSQL_ROLE")
     account = os.environ.get("SNOWSQL_ACCOUNT")
     warehouse = os.environ.get("SNOWSQL_WAREHOUSE")
     database = os.environ.get("SNOWSQL_DATABASE")
@@ -30,6 +31,7 @@ def main():
         password=password,
         private_key=private_key,
         passphrase=passphrase,
+        role=role,
         account=account,
         warehouse=warehouse,
         database=database,

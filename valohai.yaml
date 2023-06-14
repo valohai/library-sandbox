@@ -72,10 +72,12 @@
         description: Snowflake account indentifier (usually xxxxxxx-yynnnnn)
       - name: SNOWSQL_USER
         description: Snowflake user name
+      - name: SNOWSQL_ROLE
+        description: Snowflake role
       - name: SNOWSQL_PWD
         description: Snowflake password
       - name: SNOWSQL_PRIVATEKEY
-        description: Snowflake keyfile (instead of password)
+        description: Snowflake keyfile. Provide the contents of the file without line breaks and without -----BEGIN PRIVATE KEY----- and -----END PRIVATE KEY-----
       - name: SNOWSQL_PASSPHRASE
         description: Snowflake passphrase for private key
       - name: SNOWSQL_WAREHOUSE
