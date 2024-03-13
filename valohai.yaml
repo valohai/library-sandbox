@@ -442,3 +442,95 @@
         type: string
         optional: true
         description: (Optional) The name of a Hugging Face repository to use a pre-trained model.
+
+- step:
+    name: data-cleaning
+    image: python:3.11-slim
+    environment: azure-westeurope-f2sv2
+    command:
+      - pip install -r data_analysis/requirements.txt
+      - python -m data_analysis.data_cleaning {parameters}
+    category: Data Analysis
+    inputs:
+      - name: input-file
+        optional: false
+    parameters:
+      - name: remove_null
+        type: flag
+        default: true
+        description: Whether to remove null values from the dataset
+      - name: null_lookup_columns
+        type: string
+        optional: true
+        multiple: separate
+        multiple-separator: ","
+        description: The columns to be used for null value lookup, if left empty all columns will be used
+      - name: duplicate_lookup_columns
+        type: string
+        optional: true
+        multiple: separate
+        multiple-separator: ","
+        description: The columns to be used for duplicate value lookup, if left empty all columns will be used
+      - name: clear_formatting
+        type: flag
+        default: true
+        description: Whether to clear the formatting of the dataset
+      - name: output_file_name
+        type: string
+        description: The name and path for the new cleaned output file
+        default: cleaned_data.csv
+      - name: remove_duplicate_rows
+        type: flag
+        default: true
+        description: Whether to remove duplicate rows from the dataset
+
+- step:
+    name: data-outlier-detection
+    description: Detect outliers in a dataset using 4 different methods, Zscore, Inter-Quantile-Range, Isolation Forest and Autoencoder
+    image: python:3.11-slim
+    environment: azure-westeurope-f2sv2
+    command:
+      - pip install -r data_analysis/requirements.txt
+      - pip install -r data_analysis/outlier_detection_requirements.txt
+      - python -m data_analysis.outlier_detection {parameters}
+    category: Data Analysis
+    inputs:
+      - name: input-file
+        optional: false
+    parameters:
+      - name: column
+        type: string
+        optional: false
+        description: The column to be used for outlier detection
+      - name: zscore_threshold
+        type: integer
+        description: The threshold for the zscore
+        default: 2
+        optional: false
+      - name: iqr_threshold
+        type: float
+        description: The threshold for the relevant outlier detection method
+        default: 1.5
+        optional: false
+      - name: isolation_forest_contamination
+        type: float
+        description: The threshold for the relevant outlier detection method
+        default: 0.1
+        optional: false
+      - name: autoencoder_percentile
+        type: float
+        description: The threshold for the relevant outlier detection method
+        default: 95
+        optional: false
+      - name: output_path
+        type: string
+        description: The name and path for the output file in which the outliers will be saved
+        default: outliers.csv
+      - name: save_visualizations
+        type: flag
+        default: true
+        description: Whether to save visualizations of the outliers
+      - name: x_axis_for_visualization
+        type: string
+        default: "ID"
+        description: The column to be used for the x-axis in the visualizations
