@@ -1,6 +1,6 @@
 transformers
 datasets
-torch==2.0.1
+torch==2.2.0
 valohai-utils~=0.3.1
 accelerate
 nvidia-ml-py3
