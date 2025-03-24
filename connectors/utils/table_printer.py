@@ -31,5 +31,5 @@ def print_truncated_table(
         final_columns = list(columns)
 
     table = tabulate(final_rows, headers=final_columns)
-    unicode_space_table = table.replace(" ", "\u00A0")
+    unicode_space_table = table.replace(" ", "\u00a0")
     print(unicode_space_table)
