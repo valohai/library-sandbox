@@ -8,6 +8,7 @@ from transformers import (
     AutoModelForQuestionAnswering,
     AutoTokenizer,
     DefaultDataCollator,
+    PreTrainedTokenizerBase,
     Trainer,
     TrainingArguments,
 )
@@ -18,7 +19,7 @@ from utils.torch import get_preferred_torch_device
 
 def prepare_train_features(
     examples: dict[str, Any],
-    tokenizer: AutoTokenizer,
+    tokenizer: PreTrainedTokenizerBase,
     max_length: int,
     doc_stride: int,
 ) -> dict[str, Any]:

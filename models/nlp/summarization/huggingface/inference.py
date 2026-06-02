@@ -29,13 +29,13 @@ def predict(
         truncation=True,
     ).input_ids
     inputs = inputs.to(device)
-    outputs = model.generate(
+    outputs = model.generate(  # type: ignore[operator]
         inputs,
         max_new_tokens=max_summary_length,
         do_sample=False,
     )
     outputs = outputs.cpu()
-    return tokenizer.decode(outputs[0], skip_special_tokens=True)
+    return str(tokenizer.decode(outputs[0], skip_special_tokens=True))
 
 
 def main():
