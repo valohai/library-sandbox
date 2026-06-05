@@ -56,7 +56,7 @@ def load_huggingface_model_and_tokenizer(
         )
     tokenizer = tokenizer_type.from_pretrained(model_spec)
     model = model_type.from_pretrained(model_spec)
-    return tokenizer, model
+    return tokenizer, model  # type: ignore[return-value]
 
 
 def _load_from_zip(

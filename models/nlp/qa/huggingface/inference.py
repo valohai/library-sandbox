@@ -47,7 +47,7 @@ def predict(
         0,
         answer_start_index : answer_end_index + 1,
     ].cpu()
-    return tokenizer.decode(predict_answer_tokens)
+    return str(tokenizer.decode(predict_answer_tokens))
 
 
 def main():
